@@ -1,0 +1,6 @@
+export const GET_MOVIES = 'GET_MOVIES';
+export const FILTER_BY_TITLE = 'FILTER_BY_TITLE';
+export const ORDER_BY_ACTOR = 'ORDER_BY_ACTOR';
+export const ADD_OR_DELETE_FAVORITE = 'ADD_FAVORITE';
+export const DELETE_FAVORITE = 'DELETE_FAVORTE';
+export const RESET_MOVIES = 'RESET_MOVIES';

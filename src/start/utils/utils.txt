@@ -1,0 +1,5 @@
+Files in this folder are used to save functions or classes that are used in the program or current module.
+
+###
+
+Also, you can use this folder to save elements such as arrays, lists, and obj. that are used in the program or current module.

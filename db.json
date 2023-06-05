@@ -1,0 +1,104 @@
+{
+  "peliculas": [
+    {
+      "id": 1,
+      "titulo": "El Padrino",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 9.2,
+      "actores": ["Marlon Brando", "Al Pacino"],
+      "descripcion": "La historia de la familia Corleone, una de las cinco familias de la mafia en Nueva York.",
+      "comments": []
+    },
+    {
+      "id": 2,
+      "titulo": "Pulp Fiction",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": false,
+      "calificacion": 8.9,
+      "actores": ["John Travolta", "Samuel L. Jackson", "Uma Thurman"],
+      "descripcion": "La vida de dos criminales de Los Ángeles se entrelaza con la de otros personajes peculiares.",
+      "comments": []
+    },
+    {
+      "id": 3,
+      "titulo": "El Señor de los Anillos: El Retorno del Rey",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 8.9,
+      "actores": ["Elijah Wood"],
+      "descripcion": "La última parte de la trilogía épica basada en las novelas de J.R.R. Tolkien.",
+      "comments": []
+    },
+    {
+      "id": 4,
+      "titulo": "La Lista de Schindler",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": false,
+      "calificacion": 8.9,
+      "actores": ["Liam Neeson", "Ben Kingsley", "Ralph Fiennes"],
+      "descripcion": "La historia de Oskar Schindler, un empresario alemán que salva a más de mil judíos durante el Holocausto.",
+      "comments": []
+    },
+    {
+      "id": 5,
+      "titulo": "El Gran Dictador",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 8.4,
+      "actores": ["Charlie Chaplin", "Paulette Goddard", "Jack Oakie"],
+      "descripcion": "Una sátira política que critica el nazismo y la dictadura de Adolf Hitler.",
+      "comments": []
+    },
+    {
+      "id": 6,
+      "titulo": "El Club de la Lucha",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": false,
+      "calificacion": 8.8,
+      "actores": ["Edward Norton", "Helena Bonham Carter"],
+      "descripcion": "Un hombre descontento con su vida aburrida y monótona forma un club de lucha clandestino que se sale de control.",
+      "comments": []
+    },
+    {
+      "id": 7,
+      "titulo": "Interestelar",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 8.6,
+      "actores": ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+      "descripcion": "Un grupo de exploradores espaciales se embarca en un viaje interestelar para encontrar un nuevo hogar para la humanidad.",
+      "comments": []
+    },
+    {
+      "id": 8,
+      "titulo": "El Resplandor",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": false,
+      "calificacion": 8.4,
+      "actores": ["Jack Nicholson", "Shelley Duvall", "Danny Lloyd"],
+      "descripcion": "Un escritor se muda con su familia a un hotel aislado donde su cordura comienza a desmoronarse.",
+      "comments": []
+    },
+    {
+      "id": 9,
+      "titulo": "Inception",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 8.8,
+      "actores": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"],
+      "descripcion": "Un ladrón especializado en robar secretos corporativos a través de los sueños es contratado para realizar una misión de infiltración.",
+      "comments": []
+    },
+    {
+      "id": 10,
+      "titulo": "The Dark Knight",
+      "picture": "https://picsum.photos/300/200",
+      "isFavorite": true,
+      "calificacion": 9.0,
+      "actores": ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
+      "descripcion": "Batman se enfrenta al Joker, un despiadado criminal que siembra el caos en Gotham City.",
+      "comments": []
+    }
+  ]
+}

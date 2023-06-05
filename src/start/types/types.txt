@@ -1,0 +1,6 @@
+Within this folder you will create the following files:
+
+  interfaces,
+  types,
+  enums,
+  etc.

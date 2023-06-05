@@ -1,0 +1,63 @@
+create any hook you want, and then you can use it in your code.
+
+useFetch.js
+
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const useFetch = (options) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios(options);
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [options]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;
+
+// Usage
+
+
+import React from 'react';
+import useFetch from './useFetch';
+
+function MyComponent() {
+  const options = {
+    method: 'GET',
+    url: 'https://api.example.com/data',
+    // Agrega cualquier otra opción de Axios según tus necesidades
+  };
+
+  const { data, loading, error } = useFetch(options);
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div>
+      {/* Utiliza los datos obtenidos */}
+    </div>
+  );
+}
+
+export default MyComponent;

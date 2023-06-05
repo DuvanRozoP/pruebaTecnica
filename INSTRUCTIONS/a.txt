@@ -1,0 +1,17 @@
+**Instructions:**
+
+Create a web application that displays a list of movies obtained from an external API. Use React, TypeScript, Material UI, and make sure you follow good coding practices.
+
+1. Use the following API to get the list of movies: db.json file .
+use backend command in the package.json file to run the json server
+
+
+2. Displays the title and description of each movie in a list.
+3. Add a search component to filter movies by title.
+4. Implements the pagination of the movies, showing a maximum of 10 movies per page.
+5. Add a feature to add movies to a favorites list and show the number of favorite movies somewhere visible in the app (another path), use data persistence to keep the info - localStorage - redux-persist - rtk- query or react-query.
+
+6. Adds functionality to sort movies by number of actors in ascending or descending order.
+
+
+8. Add a functionality to add comments to a movie and show them when bringing the movie, the movie should show a dropdown list if it has comments

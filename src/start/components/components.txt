@@ -1,0 +1,5 @@
+create any component that you need, and use a modular structure.
+
+No component cannot use more than 250 hundred lines, separate the code the much as possible.
+
+create an intern folder for each component that you create
