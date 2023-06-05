@@ -13,9 +13,9 @@ function router() {
   ];
 
   return (
-    <MainNavbar>
+    <Router>
       <Store>
-        <Router>
+        <MainNavbar>
           <Routes>
             {routes.map(route => (
               <Route
@@ -25,9 +25,9 @@ function router() {
               />
             ))}
           </Routes>
-        </Router>
+        </MainNavbar>
       </Store>
-    </MainNavbar>
+    </Router>
   );
 }
 

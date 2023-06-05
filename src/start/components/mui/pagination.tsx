@@ -13,12 +13,15 @@ const PaginationOutlined = ({
   currentPage,
   handlePageChange,
 }: IPaginationOutlineProps): JSX.Element => {
+  const handlePage = (_event: React.ChangeEvent<unknown>, page: number) => {
+    handlePageChange(page);
+  };
   return (
     <Stack spacing={2}>
       <Pagination
         count={totalPages}
         page={currentPage}
-        onChange={handlePageChange}
+        onChange={handlePage}
         variant="outlined"
         color="secondary"
       />
