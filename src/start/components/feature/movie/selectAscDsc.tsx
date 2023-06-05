@@ -1,25 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import SelectMui from '@components/mui/select';
 import { useMovie } from '@context/movie/store';
-import { useState } from 'react';
 
 export default function SelectAscDsc() {
-  const { orderByActor } = useMovie();
-  const [option, setOption] = useState<'asc' | 'dsc'>('asc');
+  const { setOrderByActors } = useMovie();
 
-  const hanldeOrderByActor = () => {
-    if (option === 'asc') setOption('dsc');
-    else setOption('asc');
-
-    orderByActor(option);
+  const hanldeOrderByActor = (value: 'asc' | 'desc') => {
+    setOrderByActors(value);
   };
 
   return (
     <SelectMui
-      title="Ordenar por cantidad de actores"
+      title="Actors"
       options={[
         { name: 'ASC', value: 'asc' },
-        { name: 'DSC', value: 'dsc' },
+        { name: 'DSC', value: 'desc' },
       ]}
       onChange={hanldeOrderByActor}
     />

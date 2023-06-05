@@ -13,7 +13,7 @@ type TOptions = {
 interface ISelectMui {
   title: string;
   options: TOptions[];
-  onChange: () => void;
+  onChange: (value: 'asc' | 'desc') => void;
 }
 
 export default function SelectMui({ title, options, onChange }: ISelectMui) {
@@ -21,7 +21,7 @@ export default function SelectMui({ title, options, onChange }: ISelectMui) {
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
-    onChange();
+    onChange(String(event.target.value) as 'asc' | 'desc');
   };
 
   return (

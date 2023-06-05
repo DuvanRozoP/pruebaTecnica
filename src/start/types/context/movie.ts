@@ -1,26 +1,30 @@
 import { IMovieArticle } from '@type/page/Home';
 import {
-  GET_MOVIES,
-  FILTER_BY_TITLE,
-  ORDER_BY_ACTOR,
-  ADD_OR_DELETE_FAVORITE,
-  DELETE_FAVORITE,
-  RESET_MOVIES,
+  SEARCH_QUERY,
+  SORT_BY_ACTORS,
+  CURRENT_PAGE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
+  ADD_COMMENT,
+  SET_MOVIES,
+  ASC_DESC,
+  SET_ACTORS_VALUE,
 } from '@context/movie/actions';
 
 export interface IMovieState {
-  moviesList: IMovieArticle[];
-  moviesFilter: IMovieArticle[];
+  movies: IMovieArticle[];
+  favorites: number[];
+  searchQuery: string;
+  sortByActors: 'asc' | 'desc' | 'all';
+  currentPage: number;
+  totalPages: number;
+  comments: string[];
 }
 
 export interface IMovieAction {
-  onSelect: (id: string | number) => void;
-  getMovies: (movies: IMovieArticle[]) => void;
-  orderByActor: (option: 'asc' | 'dsc') => void;
-  filterByTitle: (value: string) => void;
-  addFavorite: (id: string | number) => void;
-  deleteFavorite: (id: string | number) => void;
-  reset: () => void;
+  setSortByActors: (value: 'asc' | 'desc' | 'all') => void;
+  setAscDesc: (currentPage: number) => Promise<void>;
+  setMovies: (currentPage: number) => Promise<void>;
 }
 
 export interface IStore {
@@ -28,9 +32,18 @@ export interface IStore {
 }
 
 export type TAction =
-  | { type: typeof GET_MOVIES; payload: IMovieArticle[] }
-  | { type: typeof FILTER_BY_TITLE; payload: string }
-  | { type: typeof ORDER_BY_ACTOR; payload: 'asc' | 'dsc' }
-  | { type: typeof ADD_OR_DELETE_FAVORITE; payload: string | number }
-  | { type: typeof DELETE_FAVORITE; payload: string | number }
-  | { type: typeof RESET_MOVIES; payload: undefined };
+  | {
+      type: typeof ASC_DESC;
+      payload: IMovieArticle[];
+    }
+  | {
+      type: typeof SET_MOVIES;
+      payload: {
+        movies: IMovieArticle[];
+        sizeComplete: number;
+      };
+    }
+  | {
+      type: typeof SET_ACTORS_VALUE;
+      payload: 'asc' | 'desc' | 'all';
+    };

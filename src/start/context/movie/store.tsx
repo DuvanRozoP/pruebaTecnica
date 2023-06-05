@@ -1,111 +1,193 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getApi } from '@utils/axios';
-import { reducer } from './reducer';
-import { IMovieAction, IMovieState, IStore } from '@type/context/movie';
-import { createContext, useContext, useEffect, useReducer } from 'react';
-import {
-  ADD_OR_DELETE_FAVORITE,
-  DELETE_FAVORITE,
-  FILTER_BY_TITLE,
-  GET_MOVIES,
-  ORDER_BY_ACTOR,
-  RESET_MOVIES,
-} from '@context/movie/actions';
+import { IStore } from '@type/context/movie';
 import { IMovieArticle } from '@type/page/Home';
+import {
+  getAllmovies,
+  getFavoritesApi,
+  getPaginationQuery,
+  getSearchByTitle,
+} from '@utils/axios';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+interface IMovieState {
+  showMovies: IMovieArticle[];
+  favories: IMovieArticle[];
+  orderAscDesc: 'asc' | 'desc' | '';
+  currentPage: number;
+  totalPage: number;
+}
+
+interface IMovieAction {
+  getFavorites: () => Promise<void>;
+  searByTitle: (query: string) => Promise<void>;
+  setPagination: (query: string) => Promise<void>;
+  setOrderByActors: (value: 'asc' | 'desc') => void;
+  setCurrentPage: (page: number) => void;
+  reset: () => Promise<void>;
+}
 
 const initialValues: IMovieAction & IMovieState = {
-  moviesList: [],
-  moviesFilter: [],
-  reset: () => {},
-  onSelect: (_id: string | number) => {},
-  getMovies: (_movies: IMovieArticle[]) => {},
-  orderByActor: (_option: 'asc' | 'dsc') => {},
-  filterByTitle: (_value: string) => {},
-  addFavorite: (_id: string | number) => {},
-  deleteFavorite: (_id: string | number) => {},
+  showMovies: [],
+  favories: [],
+  orderAscDesc: '',
+  currentPage: 1,
+  totalPage: 0,
+  getFavorites: async () => {},
+  searByTitle: async (_query: string) => {},
+  setPagination: async (_query: string) => {},
+  setCurrentPage: (_page: number) => {},
+  setOrderByActors: (_value: 'asc' | 'desc' | '') => {},
+  reset: async () => {},
 };
 
 const MovieContext = createContext<IMovieState & IMovieAction>(initialValues);
 
 export default function Store({ children }: IStore) {
-  const [state, dispatch] = useReducer(reducer, initialValues);
+  const [state, setState] = useState<IMovieState>({
+    showMovies: [],
+    favories: [],
+    orderAscDesc: '',
+    currentPage: 1,
+    totalPage: 0,
+  });
+  const location = useLocation();
 
-  const onSelect = (id: string | number) => {
-    console.log(id);
+  const setPagination = async (query: string) => {
+    try {
+      const data = await getPaginationQuery(query);
+      setState(prevState => ({
+        ...prevState,
+        showMovies: data,
+      }));
+    } catch (error) {
+      alert('no se pudo paginar');
+    }
   };
 
-  const getMovies = (movies: IMovieArticle[]) => {
-    dispatch({
-      type: GET_MOVIES,
-      payload: [...movies],
-    });
+  const setCurrentPage = (page: number) => {
+    setState(prevState => ({
+      ...prevState,
+      currentPage: page,
+    }));
   };
 
-  const orderByActor = (option: 'asc' | 'dsc') => {
-    dispatch({
-      type: ORDER_BY_ACTOR,
-      payload: option,
-    });
+  const setOrderByActors = (value: 'asc' | 'desc') => {
+    setState(prevState => ({
+      ...prevState,
+      currentPage: 1,
+      orderAscDesc: value,
+    }));
+
+    if (location.pathname === '/favorite')
+      setPagination(
+        `isFavorite=true&_sort=actores.length&_order=${value}&_page=1`,
+      );
+    else setPagination(`_sort=actores.length&_order=${value}&_page=1`);
   };
 
-  const filterByTitle = (value: string) => {
-    dispatch({
-      type: FILTER_BY_TITLE,
-      payload: value,
-    });
+  const reset = async () => {
+    try {
+      if (location.pathname === '/favorite')
+        await setPagination('isFavorite=true&_page=1');
+      else await setPagination(`_page=1`);
+      totalPages();
+    } catch (error) {
+      alert('no se pudo reiniciar');
+    }
   };
 
-  const addFavorite = (id: string | number) => {
-    dispatch({
-      type: ADD_OR_DELETE_FAVORITE,
-      payload: id,
-    });
+  const searByTitle = async (query: string) => {
+    console.log('🚀 ~ file: store.tsx:102 ~ searByTitle ~ query:', query);
+    try {
+      if (query.length === 0)
+        if (location.pathname === '/favorite') {
+          setPagination('isFavorite=true&_page=1');
+        } else {
+          setPagination('_page=1');
+        }
+
+      let data: IMovieArticle[];
+      if (location.pathname === '/favorite') {
+        data = await getSearchByTitle(`${query}&isFavorite=true&_page=1`);
+      } else {
+        data = await getSearchByTitle(`${query}&_page=1`);
+      }
+
+      setState(prevState => ({
+        ...prevState,
+        showMovies: data,
+      }));
+      getTotalPages();
+    } catch (error) {
+      alert('no se encontro el usuario');
+    }
   };
 
-  const deleteFavorite = (id: string | number) => {
-    dispatch({
-      type: DELETE_FAVORITE,
-      payload: id,
-    });
+  const getFavorites = async () => {
+    try {
+      const data = await getFavoritesApi();
+      setState(prevState => ({
+        ...prevState,
+        showMovies: data,
+        favories: data,
+      }));
+      getTotalPages();
+    } catch (error) {
+      alert('no se encontro el usuario');
+    }
   };
 
-  const reset = () => {
-    dispatch({
-      type: RESET_MOVIES,
-      payload: undefined,
-    });
+  //*/ helpers
+  const totalPages = async () => {
+    try {
+      const data = await getAllmovies();
+      setState(prevState => ({
+        ...prevState,
+        totalPage: Math.ceil(data.length / 5),
+        currentPage: 1,
+      }));
+      return data;
+    } catch (error) {
+      alert('no se pudo paginar');
+    }
   };
+  const getTotalPages = () => {
+    setState(prevState => ({
+      ...prevState,
+      totalPage: Math.ceil(prevState.showMovies.length / 5),
+    }));
+  };
+
+  let start: () => Promise<void>;
+  if (location.pathname === '/favorite') {
+    start = async () => {
+      await getFavorites();
+    };
+  } else {
+    start = async () => {
+      await totalPages();
+      await setPagination(`_page=${state.currentPage}`);
+    };
+  }
 
   useEffect(() => {
-    const startContext = async () => {
-      try {
-        const data = await getApi('/peliculas');
-        getMovies(data);
-      } catch (er) {
-        alert('no se pudo cargar la app');
-      }
-    };
-
-    if (state.moviesList.length === 0) startContext();
+    start();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (state.moviesList.length)
-      localStorage.setItem('moviesList', JSON.stringify(state.moviesList));
-  }, [state.moviesList]);
-
   const value: IMovieAction & IMovieState = {
-    moviesList: state.moviesList,
-    moviesFilter: state.moviesFilter,
+    showMovies: state.showMovies,
+    favories: state.favories,
+    orderAscDesc: state.orderAscDesc,
+    currentPage: state.currentPage,
+    totalPage: state.totalPage,
     reset,
-    onSelect,
-    getMovies,
-    orderByActor,
-    filterByTitle,
-    addFavorite,
-    deleteFavorite,
+    searByTitle,
+    getFavorites,
+    setPagination,
+    setCurrentPage,
+    setOrderByActors,
   };
 
   return (

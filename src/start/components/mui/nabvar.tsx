@@ -18,7 +18,7 @@ import { Search, SearchIconWrapper, StyledInputBase } from './search';
 import { useMovie } from '@context/movie/store';
 
 const Navbar: React.FC<INavbarProps> = ({ pages, settings }) => {
-  const { filterByTitle } = useMovie();
+  const { searByTitle } = useMovie();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
@@ -27,7 +27,7 @@ const Navbar: React.FC<INavbarProps> = ({ pages, settings }) => {
   );
 
   const handleInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') filterByTitle(event.currentTarget.value);
+    if (event.key === 'Enter') searByTitle(event.currentTarget.value);
   };
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
