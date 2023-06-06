@@ -51,7 +51,7 @@ export default function StoreFavorite({ children }: IStore) {
         totalPage: Math.ceil(response.length / 5),
       }));
     } catch (error) {
-      alert(error);
+      throw new Error('no se pudo conectar con la base de datos');
     }
   };
 
@@ -65,7 +65,7 @@ export default function StoreFavorite({ children }: IStore) {
         favorites: response,
       }));
     } catch (error) {
-      alert(error);
+      throw new Error('no se pudo obtener las peliculas');
     }
   }, [state.currentPage]);
 
@@ -80,8 +80,9 @@ export default function StoreFavorite({ children }: IStore) {
         currentPage: 1,
         totalPage: response.length === 0 ? state.totalPage : 0,
       }));
-    } catch (error) {
-      alert(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) alert(error.message);
+      else alert('Ocurrió un error desconocido');
     }
   };
 
@@ -95,20 +96,20 @@ export default function StoreFavorite({ children }: IStore) {
         favorites: response,
       }));
     } catch (error) {
-      alert(error);
+      throw new Error('no se pudo aplicar el filtrado');
     }
   }, [state.currentPage, state.orderAscDesc]);
 
   const reset = async () => {
     try {
-      await startApp();
-      await getMovies();
+      await Promise.all([startApp(), getMovies()]);
       setState(state => ({
         ...state,
         currentPage: 1,
       }));
-    } catch (error) {
-      alert(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) alert(error.message);
+      else alert('Ocurrió un error desconocido');
     }
   };
 

@@ -6,6 +6,7 @@ import PaginationOutlined from '@components/mui/pagination';
 import MainNavbar from '@components/layout/MainNavbar';
 import './pages.css';
 import SelectAscDsc from '@components/feature/movie/selectAscDsc';
+import { useNavigate } from 'react-router-dom';
 
 const Favorite: FC = () => {
   const {
@@ -17,6 +18,12 @@ const Favorite: FC = () => {
     setOrderByActors,
     getSearchByTitle,
   } = useFavorite();
+  const navigation = useNavigate();
+
+  // Todo: fix/bug no hace el redireccionamiento
+  if (favorites.length === 0) {
+    navigation('/notfound');
+  }
 
   const hanldePageChange = (page: number) => {
     setCurrentPage(page);
@@ -33,8 +40,6 @@ const Favorite: FC = () => {
   const handleReset = () => {
     reset();
   };
-
-  console.log('renderizado');
 
   return (
     <MainNavbar callBack={handleSearchMovie}>
