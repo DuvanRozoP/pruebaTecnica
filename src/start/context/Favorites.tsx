@@ -45,6 +45,7 @@ export default function StoreFavorite({ children }: IStore) {
   const startApp = async () => {
     try {
       const response = await GetMovieAll('?isFavorite=true');
+      localStorage.setItem('favorites', JSON.stringify(response));
       setState(state => ({
         ...state,
         totalPage: Math.ceil(response.length / 5),
