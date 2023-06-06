@@ -4,10 +4,14 @@ type TPagesNabvar = {
   name: string;
   path: string;
 };
+type TSettings = {
+  name: string;
+  path: string;
+};
 
 export interface INavbarProps {
   pages: TPagesNabvar[];
-  settings: string[];
+  settings: TSettings[];
   handleSearch?: (value: string) => void;
 }
 

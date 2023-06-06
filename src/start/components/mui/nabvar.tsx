@@ -15,6 +15,7 @@ import MovieIcon from '@mui/icons-material/Movie';
 import SearchIcon from '@mui/icons-material/Search';
 import type { INavbarProps } from '@type/components/mui/nabvar';
 import { Search, SearchIconWrapper, StyledInputBase } from './search';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC<INavbarProps> = ({ pages, settings, handleSearch }) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -94,13 +95,11 @@ const Navbar: React.FC<INavbarProps> = ({ pages, settings, handleSearch }) => {
               }}
             >
               {pages.map(page => (
-                <MenuItem
-                  key={page.name}
-                  href={page.path}
-                  onClick={handleCloseNavMenu}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
+                <Link to={page.path} key={page.name}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -129,11 +128,10 @@ const Navbar: React.FC<INavbarProps> = ({ pages, settings, handleSearch }) => {
             {pages.map(page => (
               <Button
                 key={page.name}
-                href={page.path}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page.name}
+                <Link to={page.path}>{page.name}</Link>
               </Button>
             ))}
           </Box>
@@ -172,9 +170,11 @@ const Navbar: React.FC<INavbarProps> = ({ pages, settings, handleSearch }) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                <Link to={setting.path} key={setting.name}>
+                  <MenuItem href={setting.path} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting.name}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>

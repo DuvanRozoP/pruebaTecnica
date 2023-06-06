@@ -6,7 +6,7 @@ import PaginationOutlined from '@components/mui/pagination';
 import MainNavbar from '@components/layout/MainNavbar';
 import './pages.css';
 import SelectAscDsc from '@components/feature/movie/selectAscDsc';
-import { useNavigate } from 'react-router-dom';
+import CircularIndeterminate from '@components/mui/loading';
 
 const Favorite: FC = () => {
   const {
@@ -18,12 +18,6 @@ const Favorite: FC = () => {
     setOrderByActors,
     getSearchByTitle,
   } = useFavorite();
-  const navigation = useNavigate();
-
-  // Todo: fix/bug no hace el redireccionamiento
-  if (favorites.length === 0) {
-    navigation('/notfound');
-  }
 
   const hanldePageChange = (page: number) => {
     setCurrentPage(page);
@@ -41,9 +35,11 @@ const Favorite: FC = () => {
     reset();
   };
 
+  if (!favorites.length) return <CircularIndeterminate />;
+
   return (
     <MainNavbar callBack={handleSearchMovie}>
-      <section className="Home">
+      <section className="Favorite">
         <nav className="minNavbar">
           <ButtonReset handleReset={handleReset} />
           <SelectAscDsc onChangeSelect={handleSortByActores} />
