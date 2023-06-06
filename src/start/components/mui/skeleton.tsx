@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import type { MediaProps } from '@type/components/mui/skeleton';
-import ButtonAdd from './buttons/buttonAdd';
+import ButtonAdd from '@components/feature/movie/buttonAdd';
+import ButtonDetail from '@components/feature/movie/buttonDetail';
 
 function Skeleto({ loading = false, dataSet }: MediaProps) {
   return (
-    <Grid container wrap="wrap" spacing={0} padding={2}>
+    <Grid container wrap="wrap" spacing={0} padding={2} gap={2}>
       {(loading ? Array.from(new Array(3)) : dataSet)?.map((item, index) => (
         <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
           {item ? (
@@ -38,6 +39,7 @@ function Skeleto({ loading = false, dataSet }: MediaProps) {
                 {`Actores/Actrizes • ${item.actores.length}`}
               </Typography>
               <ButtonAdd id={item.id} isFavorite={item.isFavorite} />
+              <ButtonDetail id={item.id} />
             </Box>
           ) : (
             <Box sx={{ pt: 0.5 }}>
