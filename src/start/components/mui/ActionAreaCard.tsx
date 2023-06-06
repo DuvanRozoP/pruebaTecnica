@@ -8,7 +8,7 @@ import { IMovieArticle } from '@type/page/Home';
 import { useState } from 'react';
 import { PostMovieComment } from '@utils/axios';
 import MainNavbar from '@components/layout/MainNavbar';
-import Comments from './comments';
+import Comments from './Comments';
 import './ActionAreaCard.css';
 
 //todo: tipos
@@ -26,7 +26,7 @@ export default function ActionAreaCard({ data }: IActionAreaCard) {
     try {
       await PostMovieComment(data.id, input);
     } catch (error) {
-      alert('no se pudo guardar el comentario');
+      alert(`no se pudo guardar el comentario`);
     } finally {
       window.location.reload();
     }

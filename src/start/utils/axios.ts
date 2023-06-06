@@ -94,6 +94,7 @@ export const PutMovieFavorite = async (id: number | string, value: boolean) => {
 
 export const PostMovieComment = async (id: number, comment: string) => {
   try {
+    if (comment.length === 0) throw new Error('comentario invalido');
     const data: IMovieArticle = (await api.get(`/peliculas/${id}`)).data;
     await api.put(`/peliculas/${id}`, {
       ...data,
