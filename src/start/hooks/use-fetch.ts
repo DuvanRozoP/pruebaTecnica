@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import type { useFetchResponse, FetchOptions } from '@type/hooks/use-fetch';
 import type { AxiosResponse } from 'axios';
+import { api } from '@utils/axios';
 
 const useFetch = <T>(
   url: string,
@@ -16,7 +17,7 @@ const useFetch = <T>(
       setIsLoading(true);
 
       try {
-        const response: AxiosResponse<T> = await axios.get(url, options);
+        const response: AxiosResponse<T> = await api.get(url, options);
         setData(response.data);
         setError(null);
         setIsLoading(false);

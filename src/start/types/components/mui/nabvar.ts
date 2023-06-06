@@ -8,6 +8,7 @@ type TPagesNabvar = {
 export interface INavbarProps {
   pages: TPagesNabvar[];
   settings: string[];
+  handleSearch?: (value: string) => void;
 }
 
 export type INavbarRef = MutableRefObject<string>;

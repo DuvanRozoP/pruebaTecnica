@@ -1,3 +1,8 @@
+export type comments = {
+  text: string;
+  author: string;
+};
+
 export interface IMovieArticle {
   id: number;
   titulo: string;
@@ -6,5 +11,5 @@ export interface IMovieArticle {
   calificacion: number;
   actores: string[];
   descripcion: string;
-  comments: string[];
+  comments: comments[];
 }

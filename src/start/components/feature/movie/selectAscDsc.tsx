@@ -1,12 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import SelectMui from '@components/mui/select';
-import { useMovie } from '@context/movie/store';
+import SelectMui from '@components/mui/SelectMui';
+import { ISelectAscDsc } from '@type/components/movie/select';
 
-export default function SelectAscDsc() {
-  const { setOrderByActors } = useMovie();
-
-  const hanldeOrderByActor = (value: 'asc' | 'desc') => {
-    setOrderByActors(value);
+export default function SelectAscDsc({ onChangeSelect }: ISelectAscDsc) {
+  const hanldeOrderByActor = (value: 'asc' | 'desc' | 'none') => {
+    onChangeSelect(value);
   };
 
   return (
@@ -15,6 +12,7 @@ export default function SelectAscDsc() {
       options={[
         { name: 'ASC', value: 'asc' },
         { name: 'DSC', value: 'desc' },
+        { name: 'None', value: 'none' },
       ]}
       onChange={hanldeOrderByActor}
     />

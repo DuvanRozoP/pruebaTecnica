@@ -15,10 +15,8 @@ import MovieIcon from '@mui/icons-material/Movie';
 import SearchIcon from '@mui/icons-material/Search';
 import type { INavbarProps } from '@type/components/mui/nabvar';
 import { Search, SearchIconWrapper, StyledInputBase } from './search';
-import { useMovie } from '@context/movie/store';
 
-const Navbar: React.FC<INavbarProps> = ({ pages, settings }) => {
-  const { searByTitle } = useMovie();
+const Navbar: React.FC<INavbarProps> = ({ pages, settings, handleSearch }) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
@@ -27,7 +25,8 @@ const Navbar: React.FC<INavbarProps> = ({ pages, settings }) => {
   );
 
   const handleInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') searByTitle(event.currentTarget.value);
+    if (event.key === 'Enter' && handleSearch !== undefined)
+      handleSearch(event.currentTarget.value);
   };
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

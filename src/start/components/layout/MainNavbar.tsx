@@ -2,7 +2,7 @@ import Navbar from '@components/mui/nabvar';
 import type { IMainNavbar } from '@type/components/layout/MainNavbar';
 import './layout.css';
 
-const MainNavbar = ({ children }: IMainNavbar): JSX.Element => {
+const MainNavbar = ({ children, callBack }: IMainNavbar): JSX.Element => {
   return (
     <>
       <Navbar
@@ -16,8 +16,10 @@ const MainNavbar = ({ children }: IMainNavbar): JSX.Element => {
             path: '/favorite',
           },
         ]}
+        handleSearch={callBack}
         settings={['Peliculas', 'Favoritos']}
       />
+
       <main className="containerPrincipal">{children}</main>
     </>
   );

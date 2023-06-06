@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Stack from '@mui/material/Stack';
-import { useMovie } from '@context/movie/store';
+import { IButtonReset } from '@type/components/movie/button';
 
-export default function ButtonReset() {
-  const { reset } = useMovie();
+export default function ButtonReset({ handleReset }: IButtonReset) {
   const handleClick = () => {
-    reset();
+    handleReset();
   };
   return (
     <Stack direction="row" spacing={2}>

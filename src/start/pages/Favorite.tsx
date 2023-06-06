@@ -1,45 +1,57 @@
 import { FC } from 'react';
-import { useMovie } from '@context/movie/store';
+import { useFavorite } from '@context/Favorites';
+import ButtonReset from '@components/feature/movie/resetButton';
 import CardMovie from '@components/feature/movie/cardMovie';
 import PaginationOutlined from '@components/mui/pagination';
-import SelectText from '@components/feature/movie/selectAscDsc';
+import MainNavbar from '@components/layout/MainNavbar';
 import './pages.css';
-import ButtonReset from '@components/feature/movie/resetButton';
+import SelectAscDsc from '@components/feature/movie/selectAscDsc';
 
 const Favorite: FC = () => {
   const {
-    showMovies,
-    totalPage,
     currentPage,
-    orderAscDesc,
-    setPagination,
+    favorites,
+    totalPage,
+    reset,
     setCurrentPage,
-  } = useMovie();
+    setOrderByActors,
+    getSearchByTitle,
+  } = useFavorite();
 
   const hanldePageChange = (page: number) => {
     setCurrentPage(page);
-
-    console.log('🚀 ~ orderAscDesc:', orderAscDesc);
-    if (orderAscDesc === 'asc' || orderAscDesc === 'desc')
-      setPagination(
-        `isFavorite=true&_sort=actores.length&_order=${orderAscDesc}&_page=${page}`,
-      );
-    else setPagination(`isFavorite=true&_page=${page}`);
   };
 
+  const handleSortByActores = (value: 'asc' | 'desc' | 'none') => {
+    setOrderByActors(value);
+  };
+
+  const handleSearchMovie = (value: string) => {
+    getSearchByTitle(value);
+  };
+
+  const handleReset = () => {
+    reset();
+  };
+
+  console.log('renderizado');
+
   return (
-    <section className="Favorite">
-      <nav className="minNavbar">
-        <ButtonReset />
-        <SelectText />
-      </nav>
-      <CardMovie dataSet={showMovies} />
-      <PaginationOutlined
-        totalPages={totalPage}
-        currentPage={currentPage}
-        handlePageChange={hanldePageChange}
-      />
-    </section>
+    <MainNavbar callBack={handleSearchMovie}>
+      <section className="Home">
+        <nav className="minNavbar">
+          <ButtonReset handleReset={handleReset} />
+          <SelectAscDsc onChangeSelect={handleSortByActores} />
+        </nav>
+        <CardMovie dataSet={favorites} />
+        <PaginationOutlined
+          totalPages={totalPage}
+          currentPage={currentPage}
+          handlePageChange={hanldePageChange}
+        />
+      </section>
+    </MainNavbar>
   );
 };
+
 export default Favorite;
